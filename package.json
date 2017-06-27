@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/shangxinbo/treering#readme",
   "dependencies": {
-    "koa": "^2.3.0"
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "mongoose": "^4.11.0"
   }
 }
