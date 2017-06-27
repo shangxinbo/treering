@@ -1,0 +1,26 @@
+{
+  "name": "treering",
+  "version": "1.0.0",
+  "description": "a todo manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shangxinbo/treering.git"
+  },
+  "keywords": [
+    "todo",
+    "timer"
+  ],
+  "author": "shangxinbo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shangxinbo/treering/issues"
+  },
+  "homepage": "https://github.com/shangxinbo/treering#readme",
+  "dependencies": {
+    "koa": "^2.3.0"
+  }
+}
