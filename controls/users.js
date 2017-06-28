@@ -7,10 +7,12 @@ exports.register = async (ctx, next) => {
 
     let name = ctx.request.body.name
     let password = ctx.request.body.password
+    let email = ctx.request.body.email
 
     //name pattern
     let nameReg = /^(?=[A-Za-z])[A-Za-z0-9]{6,}$/
-
+    
+    let emailReg = /^[a-z0-9]+([._\-][a-z0-9])@([a-z0-9]+[a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
     //pass pattern
     let passwordReg = /^[A-Za-z0-9]{6,}$/
 
@@ -45,10 +47,15 @@ exports.register = async (ctx, next) => {
 exports.login = async (ctx, next) => {
     let name = ctx.request.body.name
     let password = md5(ctx.request.body.password)
-    let query = await Users.find({ name: name, password:password },'_id name join_time last_time')
-    if(query.length==1){
-        ctx.body = result(200,query)
-    }else{
-        ctx.body = result(205,'user does not exit')
+    let query = await Users.find({ name: name, password: password }, '_id name join_time last_time')
+    if (query.length == 1) {
+        ctx.session.token = md5(name)
+        ctx.body = result(200, query)
+    } else {
+        ctx.body = result(205, 'user does not exit')
     }
+}
+
+exports.resetPassword = async (ctx, next) => {
+    
 }

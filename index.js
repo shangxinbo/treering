@@ -1,6 +1,7 @@
 let Koa = require('koa')
 let mongoose = require('mongoose')
 let bodyParser = require('koa-bodyparser')
+let session = require('koa-session')
 let router = require('./configs/routes')
 
 const DB = 'mongodb://127.0.0.1:27017/treering'    //mongodb server
@@ -9,7 +10,20 @@ mongoose.Promise = require('bluebird')
 
 let app = new Koa()
 
+app.keys = ['malimalihong']
+
+const CONFIG = {
+    key: 'koa:sess',
+    maxAge: 86400000,
+    overwrite: true, /** (boolean) can overwrite or not (default true) */
+    httpOnly: true, /** (boolean) httpOnly or not (default true) */
+    signed: true, /** (boolean) signed or not (default true) */
+    rolling: false
+}
+
+
 app.use(bodyParser())
+app.use(session(CONFIG, app))
 
 app
     .use(router.routes())
