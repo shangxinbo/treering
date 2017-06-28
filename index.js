@@ -29,6 +29,7 @@ mongoose.connection.on('error', function (err) {
 
 
 app.on('error', function (err) {
+    console.log(123)
     console.error(err.stack)
     console.log(err.message)
 })
