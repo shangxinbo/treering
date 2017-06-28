@@ -13,6 +13,6 @@ router.get('/', function (ctx, next) {
     }, () => {
         console.log(123)
     })
-    ctx.body = 'Hello World!';
-});
+    ctx.body = 'Hello World!'
+})
 module.exports = router
