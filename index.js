@@ -1,10 +1,16 @@
 let Koa = require('koa')
-let mongoose = require('mongoose');
+let mongoose = require('mongoose')
+let bodyParser = require('koa-bodyparser')
 let router = require('./configs/routes')
 
 const DB = 'mongodb://127.0.0.1:27017/treering'    //mongodb server
 
+mongoose.Promise = require('bluebird')
+
 let app = new Koa()
+
+app.use(bodyParser())
+
 app
     .use(router.routes())
     .use(router.allowedMethods())
@@ -31,5 +37,5 @@ process.on('SIGINT', function () {
     mongoose.connection.close(function () {
         console.log('Mongoose default connection closed through app termination')
         process.exit(0)
-    });
-});
+    })
+})

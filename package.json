@@ -21,11 +21,15 @@
   },
   "homepage": "https://github.com/shangxinbo/treering#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
+    "md5": "^2.2.1",
     "mongoose": "^4.11.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "eslint": "^4.1.1"
   }
 }

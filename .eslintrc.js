@@ -2,13 +2,9 @@
 
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   env: {
-    node: true,
-    es6: true
-  },
-  parserOptions: {
-    "ecmaVersion": 6,
-    "impliedStrict": true
+    node: true
   },
   extends: 'eslint:recommended',
   // add your custom rules here
