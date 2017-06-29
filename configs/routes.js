@@ -2,7 +2,7 @@ let Router = require('koa-router')
 let router = new Router()
 
 let users = require('../controls/users')
-let exigent = require('../controls/exigent')
+let todos = require('../controls/todos')
 let history = require('../controls/history')
 
 
@@ -18,12 +18,12 @@ router
     .post('/register', users.register)
     .post('/login', users.login)
     .post('/logout', users.logout)
-    .post('/exigent/create', auth, exigent.create)
-    .post('/exigent/delete', auth, exigent.remove)
-    .post('/exigent/list', auth, exigent.find)
-    .post('/exigent/sort', auth, exigent.sort)
-    .post('/exigent/addchild', auth, exigent.createChild)
-    .post('/exigent/current', auth, exigent.getCurrent)
+    .post('/todos/create', auth, todos.create)
+    .post('/todos/delete', auth, todos.remove)
+    .post('/todos/list', auth, todos.find)
+    .post('/todos/sort', auth, todos.sort)
+    .post('/todos/addchild', auth, todos.createChild)
+    .post('/todos/current', auth, todos.getCurrent)
     .post('/history/success', auth, history.overThis)
     .post('/history/fail', auth, history.failThis)
 

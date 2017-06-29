@@ -1,22 +1,25 @@
 let Exigent = require('../models/Exigent')
+let Important = require('../models/Important')
 let result = require('../utils/classes').result
 let history = require('./history.js')
 
 
-//create a top level exigent todo and set this to the top of queue
+//create a top level todo and set this to the top of queue
 exports.create = async (ctx, next) => {
     let text = ctx.request.body.text
+    let type = ctx.request.body.type
     let user_id = ctx.session.token
+    let model = type == 1 ? Important : Exigent
     let now = new Date()
 
-    let query = await Exigent.findOne({ user_id: user_id })
+    let query = await model.findOne({ user_id: user_id })
     try {
         if (query) {
             let oldTodo = query.todo
             oldTodo.push(text)
-            await Exigent.findOneAndUpdate({ user_id: user_id }, { todo: oldTodo, last_time: now })
+            await model.findOneAndUpdate({ user_id: user_id }, { todo: oldTodo, last_time: now })
         } else {
-            await Exigent.create({
+            await model.create({
                 user_id: user_id,
                 todo: text,
                 last_time: now
@@ -32,8 +35,10 @@ exports.create = async (ctx, next) => {
 exports.createChild = async (ctx, next) => {
     let father = ctx.request.body.father   //'0-0-2' todo[0][0][2]
     let text = ctx.request.body.text
+    let type = ctx.request.body.type
     let user_id = ctx.session.token
-    let query = await Exigent.findOne({ user_id: user_id })
+    let model = type == 1 ? Important : Exigent
+    let query = await model.findOne({ user_id: user_id })
     let now = new Date()
 
     father = father.split('-')
@@ -57,11 +62,11 @@ exports.createChild = async (ctx, next) => {
                     children: [text]
                 }
                 ss[father[father.length - 1]] = tmp
-                await Exigent.findOneAndUpdate({ user_id: user_id }, { todo: todos, last_time: now })
+                await model.findOneAndUpdate({ user_id: user_id }, { todo: todos, last_time: now })
                 ctx.body = result(200, 'create success')
             } else {
                 tmp.children.push(text)
-                await Exigent.findOneAndUpdate({ user_id: user_id }, { todo: todos, last_time: now })
+                await model.findOneAndUpdate({ user_id: user_id }, { todo: todos, last_time: now })
                 ctx.body = result(200, 'create success')
             }
         } catch (err) {
@@ -69,7 +74,7 @@ exports.createChild = async (ctx, next) => {
         }
 
     } else {
-        ctx.body = result(302, 'none of exigent todos')
+        ctx.body = result(302, 'no data')
     }
 
 }
@@ -78,8 +83,10 @@ exports.createChild = async (ctx, next) => {
 exports.remove = async (ctx, next) => {
     let index = ctx.request.body.index.split('-')  //'0-1-3' remove todo[0][1][3]
     let user_id = ctx.session.token
+    let type = ctx.request.body.type
+    let model = type == 1 ? Important : Exigent
     let now = new Date()
-    let query = await Exigent.findOne({ user_id: user_id })
+    let query = await model.findOne({ user_id: user_id })
     if (query) {
         let todos = query.todo
         if (todos.length > 0) {
@@ -92,20 +99,22 @@ exports.remove = async (ctx, next) => {
                 }
             })
             s.splice(index[index.length - 1], 1)
-            await Exigent.findOneAndUpdate({ user_id: user_id }, { todo: todos, last_time: now })
+            await model.findOneAndUpdate({ user_id: user_id }, { todo: todos, last_time: now })
             ctx.body = result(200, 'delete success')
         } else {
-            ctx.body = result(302, 'none of exigent todos')
+            ctx.body = result(302, 'no data')
         }
     } else {
-        ctx.body = result(302, 'none of exigent todos')
+        ctx.body = result(302, 'no data')
     }
 }
 
 //query all todo list by this user
 exports.find = async (ctx, next) => {
     let user_id = ctx.session.token
-    let query = await Exigent.findOne({ user_id: user_id })
+    let type = ctx.request.body.type
+    let model = type == 1 ? Important : Exigent
+    let query = await model.findOne({ user_id: user_id })
     if (query) {
         ctx.body = result(200, query.todo)
     } else {
@@ -118,8 +127,10 @@ exports.sort = async (ctx, next) => {
     let father = ctx.request.body.father.split('-')  //'0-2'  todos[0][2]
     let oldloc = ctx.request.body.oldloc
     let newloc = ctx.request.body.newloc
+    let type = ctx.request.body.type
+    let model = type == 1 ? Important : Exigent
     let user_id = ctx.session.token
-    let query = await Exigent.findOne({ user_id: user_id })
+    let query = await model.findOne({ user_id: user_id })
     if (query) {
         let todos = query.todo
         let tmp = todos
@@ -130,7 +141,7 @@ exports.sort = async (ctx, next) => {
         if (value) {
             tmp.splice(oldloc, 1)
             tmp.splice(newloc, 0, value)
-            await Exigent.findOneAndUpdate({ user_id: user_id, todo: todos })
+            await model.findOneAndUpdate({ user_id: user_id, todo: todos })
             ctx.body = result(200, 'sort success')
         } else {
             ctx.body = result(303, 'value not fit')
