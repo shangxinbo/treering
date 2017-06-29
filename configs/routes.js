@@ -20,5 +20,6 @@ router
     .post('/exigent/create',auth, exigent.create)
     .post('/exigent/delete',auth, exigent.remove)
     .post('/exigent/list',auth, exigent.find)
+    .post('/exigent/sort',auth, exigent.sort)
     
 module.exports = router
