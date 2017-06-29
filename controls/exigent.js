@@ -23,7 +23,6 @@ exports.create = async (ctx, next) => {
         }
         ctx.body = result(200, 'create success')
     } catch (err) {
-
         ctx.body = result(301, err)
     }
 }
@@ -31,6 +30,26 @@ exports.create = async (ctx, next) => {
 //create a child for a father todo
 exports.createChild = async (ctx, next) => {
 
+}
+
+//remove todo by index
+exports.remove = async (ctx, next) => {
+    let index = ctx.request.body.index
+    let user_id = ctx.session.token
+    let now = new Date()
+    let query = await Exigent.findOne({ user_id: user_id })
+    if (query) {
+        let todo = query.todo
+        if (todo.length > 0) {
+            todo.splice(index, 1)
+            await Exigent.findOneAndUpdate({ user_id: user_id }, { todo: todo, last_time: now })
+            ctx.body = result(200, 'delete success')
+        } else {
+            ctx.body = result(302, 'none of exigent todos')
+        }
+    } else {
+        ctx.body = result(302, 'none of exigent todos')
+    }
 }
 
 //query all todo list by this user

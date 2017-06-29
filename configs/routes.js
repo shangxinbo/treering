@@ -18,5 +18,6 @@ router
     .post('/login', users.login)
     .post('/logout', users.logout)
     .post('/exigent/create',auth, exigent.create)
+    .post('/exigent/delete',auth, exigent.remove)
     
 module.exports = router
