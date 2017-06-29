@@ -2,17 +2,13 @@ let Users = require('../models/Users')
 let md5 = require('md5')
 let result = require('../utils/classes').result
 
-
 exports.register = async (ctx, next) => {
 
     let name = ctx.request.body.name
     let password = ctx.request.body.password
-    let email = ctx.request.body.email
 
     //name pattern
     let nameReg = /^(?=[A-Za-z])[A-Za-z0-9]{6,}$/
-    
-    let emailReg = /^[a-z0-9]+([._\-][a-z0-9])@([a-z0-9]+[a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
     //pass pattern
     let passwordReg = /^[A-Za-z0-9]{6,}$/
 
@@ -57,5 +53,10 @@ exports.login = async (ctx, next) => {
 }
 
 exports.resetPassword = async (ctx, next) => {
-    
+    //TODO 
+}
+
+exports.logout = async (ctx, next) => {
+    ctx.session = null
+    ctx.body = result(200, 'logout success')
 }
