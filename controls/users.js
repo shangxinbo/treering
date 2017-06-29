@@ -1,4 +1,6 @@
 let Users = require('../models/Users')
+let Exigent = require('../models/Exigent')
+let Important = require('../models/Important')
 let md5 = require('md5')
 let result = require('../utils/classes').result
 
@@ -53,10 +55,52 @@ exports.login = async (ctx, next) => {
 }
 
 exports.resetPassword = async (ctx, next) => {
-    //TODO 
+    let name = ctx.request.body.name
+    let keyword = ctx.request.body.keyword
+    let user = await Users.findOne({ name: name })
+    if (user && keyword.length > 3) {
+        let id = user.id
+        let queryTodo = await Exigent.findOne({ user_id: id })
+        let queryHistory = await Exigent.find({ user_id: id })
+        let alltext = []
+        if (queryTodo) {
+            queryTodo.todo.forEach((item, index, arr) => {
+                if (typeof item == 'string') {
+                    alltext.push(item)
+                } else {
+                    let ss = gettext(item)
+                    alltext = alltext.concat(ss)
+                    
+                }
+            })
+        }
+
+        //console.log(alltext)
+    } else {
+        ctx.body = result(401, 'name or kewwords error')
+    }
+
+
+
+
 }
 
 exports.logout = async (ctx, next) => {
     ctx.session = null
     ctx.body = result(200, 'logout success')
+}
+
+function gettext(obj) {
+    let arr = []
+    arr.push(obj.father)
+    obj.children.forEach((item, index, arr) => {
+        if (typeof item == 'string') {
+            arr.push(item)
+            console.log(234)
+        } else {
+            arr = arr.concat(gettext(item))
+        }
+    })
+    console.log(arr)
+    return arr
 }
