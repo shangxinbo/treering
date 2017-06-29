@@ -54,7 +54,13 @@ exports.remove = async (ctx, next) => {
 
 //query all todo list by this user
 exports.find = async (ctx, next) => {
-
+    let user_id = ctx.session.token
+    let query = await Exigent.findOne({ user_id: user_id })
+    if (query) {
+        ctx.body = result(200, query.todo)
+    } else {
+        ctx.body = result(303, 'there is no values')
+    }
 }
 
 //sort todo list
