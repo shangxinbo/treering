@@ -22,6 +22,7 @@ router
     .post('/exigent/list',auth, exigent.find)
     .post('/exigent/sort',auth, exigent.sort)
     .post('/exigent/addchild',auth, exigent.createChild)
+    .post('/exigent/current',auth, exigent.getCurrent)
 
-    
+
 module.exports = router
