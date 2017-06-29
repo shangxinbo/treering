@@ -29,6 +29,46 @@ exports.create = async (ctx, next) => {
 
 //create a child for a father todo
 exports.createChild = async (ctx, next) => {
+    let father = ctx.request.body.father   //'0-0-2' todo[0][0][2]
+    let text = ctx.request.body.text
+    let user_id = ctx.session.token
+    let query = await Exigent.findOne({ user_id: user_id })
+    let now = new Date()
+
+    father = father.split('-')
+
+    if (query) {
+        let todos = query.todo
+        let tmp = todos
+        let ss = todos
+
+        father.forEach((index, item, arr) => {
+            tmp = tmp[item]
+            if (index == arr.length - 2) {
+                ss = tmp
+            }
+        })
+
+        try {
+            if (typeof tmp == 'string') {
+                tmp = {
+                    father: tmp,
+                    children: [text]
+                }
+                ss[father[father.length - 1]] = tmp
+                await Exigent.findOneAndUpdate({ user_id: user_id }, { todo: todos, last_time: now })
+                ctx.body = result(200, 'create success')
+            } else {
+                tmp.children.push(text)
+                ctx.body = result(200, 'create success')
+            }
+        } catch (err) {
+            ctx.body = result(304, err)
+        }
+
+    } else {
+        ctx.body = result(302, 'none of exigent todos')
+    }
 
 }
 
@@ -75,7 +115,7 @@ exports.sort = async (ctx, next) => {
         if (value) {
             todos.splice(oldloc, 1)
             todos.splice(newloc, 0, value)
-            await Exigent.findOneAndUpdate({user_id:user_id,todo:todos})
+            await Exigent.findOneAndUpdate({ user_id: user_id, todo: todos })
             ctx.body = result(200, 'sort success')
         } else {
             ctx.body = result(303, 'value not fit')
