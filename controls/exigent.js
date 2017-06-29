@@ -146,12 +146,12 @@ exports.getCurrent = async (ctx, next) => {
     let query = await Exigent.findOne({ user_id: user_id })
     if (query) {
         let todos = query.todo
-        console.log(todos)
-        let last = todos[todos.length-1]
-        if(typeof last == 'string'){
-            ctx.body = result(200,last)
-        }else{
-            ctx.body = result(200,getlast(last))
+        let last = todos[todos.length - 1]
+        if (typeof last == 'string') {
+            todos.pop()
+            ctx.body = result(200, last)
+        } else {
+            ctx.body = result(200, getlast(last))
         }
     } else {
         ctx.body = result(303, 'there is no values')
@@ -161,6 +161,8 @@ exports.getCurrent = async (ctx, next) => {
         let arr = obj.children
         let last = arr[arr.length - 1]
         if (typeof last == 'string') {
+            arr.pop()
+            //TODO arr.length==0 reset this todo
             return last
         } else {
             return getlast(obj)
@@ -170,5 +172,11 @@ exports.getCurrent = async (ctx, next) => {
 
 //set success status for this todo
 exports.overThis = async (ctx, next) => {
+    console.log(123)
+    //TODO
+}
 
+//set fail status for this todo
+exports.failThis = async (ctx, next) => {
+    //TODO
 }
