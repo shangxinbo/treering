@@ -24,8 +24,8 @@ router
     .post('/exigent/sort', auth, exigent.sort)
     .post('/exigent/addchild', auth, exigent.createChild)
     .post('/exigent/current', auth, exigent.getCurrent)
-    .post('/history/success', auth, history.success)
-    .post('/history/fail', auth, history.fail)
+    .post('/history/success', auth, history.overThis)
+    .post('/history/fail', auth, history.failThis)
 
 
 module.exports = router
