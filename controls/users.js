@@ -45,7 +45,7 @@ exports.login = async (ctx, next) => {
     let password = md5(ctx.request.body.password)
     let query = await Users.find({ name: name, password: password }, '_id name join_time last_time')
     if (query.length == 1) {
-        ctx.session.token = md5(name)
+        ctx.session.token = query[0].id
         ctx.body = result(200, query)
     } else {
         ctx.body = result(205, 'user does not exit')

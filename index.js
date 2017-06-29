@@ -26,6 +26,7 @@ app.use(bodyParser())
 app.use(session(CONFIG, app))
 
 app
+    
     .use(router.routes())
     .use(router.allowedMethods())
 
