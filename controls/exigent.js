@@ -1,5 +1,6 @@
 let Exigent = require('../models/Exigent')
 let result = require('../utils/classes').result
+let history = require('./history.js')
 
 
 //create a top level exigent todo and set this to the top of queue
@@ -149,9 +150,14 @@ exports.getCurrent = async (ctx, next) => {
         let last = todos[todos.length - 1]
         if (typeof last == 'string') {
             todos.pop()
-            ctx.body = result(200, last)
+
+            let id = await history.add(user_id, last)
+
+            ctx.body = result(200, { text: last, id: id })
         } else {
-            ctx.body = result(200, getlast(last))
+            let text = getlast(last)
+            let id = await history.add(user_id, text)
+            ctx.body = result(200, { text, id })
         }
     } else {
         ctx.body = result(303, 'there is no values')
@@ -168,15 +174,4 @@ exports.getCurrent = async (ctx, next) => {
             return getlast(obj)
         }
     }
-}
-
-//set success status for this todo
-exports.overThis = async (ctx, next) => {
-    console.log(123)
-    //TODO
-}
-
-//set fail status for this todo
-exports.failThis = async (ctx, next) => {
-    //TODO
 }
