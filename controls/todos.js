@@ -151,6 +151,16 @@ exports.sort = async (ctx, next) => {
     }
 }
 
+//TODO 整体保存
+exports.saveChange = async (ctx, next) => {
+    let type = ctx.request.body.type
+    let arr = ctx.request.body.arr
+    let user_id = ctx.session.token
+    let model = type == 1 ? Important : Exigent
+    await model.findOneAndUpdate({ user_id: user_id, todo: arr })
+    ctx.body = result(200, 'sort success')
+}
+
 
 //get the info of current doing todo
 exports.getCurrent = async (ctx, next) => {

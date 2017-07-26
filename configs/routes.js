@@ -23,6 +23,7 @@ router
     .post('/todos/delete', auth, todos.remove)
     .post('/todos/list', auth, todos.find)
     .post('/todos/sort', auth, todos.sort)
+    .post('/todos/saveChange', auth, todos.saveChange)
     .post('/todos/addchild', auth, todos.createChild)
     .post('/todos/current', auth, todos.getCurrent)
     .post('/history/success', auth, history.overThis)

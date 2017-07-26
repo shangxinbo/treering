@@ -49,7 +49,7 @@ exports.login = async (ctx, next) => {
     let query = await Users.find({ name: name, password: password }, '_id name join_time last_time')
     if (query.length == 1) {
         ctx.session.token = query[0].id
-        ctx.body = result(200, query)
+        ctx.body = result(200, query[0])
     } else {
         ctx.body = result(205, 'user does not exit')
     }
