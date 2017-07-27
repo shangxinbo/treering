@@ -170,26 +170,31 @@ exports.getCurrent = async (ctx, next) => {
         let todos = query.todo
         let last = todos[todos.length - 1]
         if (typeof last == 'string') {
-            todos.pop()
-
-            let id = await history.add(user_id, last)
-
-            ctx.body = result(200, { text: last, id: id })
+            ctx.body = result(200, last)
         } else {
             let text = getlast(last)
-            let id = await history.add(user_id, text)
-            ctx.body = result(200, { text, id })
+            ctx.body = result(200, text)
         }
     } else {
-        ctx.body = result(303, 'there is no values')
+        let queryImportant = await Important.findOne({ user_id: user_id })
+        if (queryImportant) {
+            let todos = queryImportant.todo
+            let last = todos[todos.length - 1]
+            if (typeof last == 'string') {
+                ctx.body = result(200, last)
+            } else {
+                let text = getlast(last)
+                ctx.body = result(200, text)
+            }
+        } else {
+            ctx.body = result(303, 'there is no values')
+        }
     }
 
     function getlast(obj) {
         let arr = obj.children
         let last = arr[arr.length - 1]
         if (typeof last == 'string') {
-            arr.pop()
-            //TODO arr.length==0 reset this todo
             return last
         } else {
             return getlast(obj)

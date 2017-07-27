@@ -1,51 +1,75 @@
 
 let History = require('../models/History')
+let Exigent = require('../models/Exigent')
+let Important = require('../models/Important')
 let result = require('../utils/classes').result
 
-//add a history
-exports.add = async (user_id, text) => {
-    let join_time = new Date()
-    let end_time = ''
-    if (text) {
-        let model = await History.create({
-            user_id,
-            text,
-            status: 0,
-            join_time,
-            end_time
-        })
-        return model.id
-    } else {
-        return null
-    }
-}
-
 //set success status for this todo
-exports.overThis = async (ctx, next) => {
-    let id = ctx.request.body.id
+exports.add = async (ctx, next) => {
+    let text = ctx.request.body.text
+    let status = ctx.request.body.status
+    let user_id = ctx.session.token
     let now = new Date()
-    try {
-        await History.findByIdAndUpdate(id, {
-            status: 1,
-            end_time: now
-        })
-        ctx.body = result(200, 'success')
-    } catch (err) {
-        ctx.body = result(200, err)
+
+    let query1 = await Exigent.findOne({ user_id: user_id })
+    let query2 = await Important.findOne({ user_id: user_id })
+    let type = 0
+    let todo
+    if (query1 && query1.todo.length > 0) {
+        type = 1
+        todo = query1.todo
+    } else if (query2 && query2.todo.length > 0) {
+        type = 2
+        todo = query1.todo
     }
+
+    if (typeof todo == 'string') {
+        if (todo == text) {
+            todo.pop()
+            await History.create({
+                user_id,
+                text,
+                status: status ? status : 1,
+                end_time: now
+            })
+        }
+    } else if (typeof todo == 'object') {
+        let last = todo[todo.length - 1]
+        if (last.children[last.children.length - 1] == text) {
+            if (last.children.length > 1) {
+                last.children.pop()
+            } else {
+                todo.pop()
+            }
+            await History.create({
+                user_id,
+                text: '【' + last.father + '】' + text,
+                status: status ? status : 1,
+                end_time: now
+            })
+        }
+    }
+
+    if (type != 0) {
+        if (type == 1) {
+            await Exigent.findOneAndUpdate({ user_id: user_id }, { todo: todo, last_time: now })
+        } else {
+            await Important.findOneAndUpdate({ user_id: user_id }, { todo: todo, last_time: now })
+        }
+        ctx.body = result(200, 'success')
+    } else {
+        ctx.body = result(302, 'no data')
+    }
+
 }
 
-//set fail status for this todo
-exports.failThis = async (ctx, next) => {
-    let id = ctx.request.body.id
-    let now = new Date()
-    try {
-        await History.findByIdAndUpdate(id, {
-            status: -1,
-            end_time: now
-        })
-        ctx.body = result(200, 'success')
-    } catch (err) {
-        ctx.body = result(200, err)
+
+function getlast(obj) {
+    let arr = obj.children
+    let last = arr[arr.length - 1]
+    if (typeof last == 'string') {
+        return last
+    } else {
+        return getlast(obj)
     }
 }

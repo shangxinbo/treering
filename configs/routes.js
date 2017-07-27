@@ -25,9 +25,8 @@ router
     .post('/todos/sort', auth, todos.sort)
     .post('/todos/saveChange', auth, todos.saveChange)
     .post('/todos/addchild', auth, todos.createChild)
-    .post('/todos/current', auth, todos.getCurrent)
-    .post('/history/success', auth, history.overThis)
-    .post('/history/fail', auth, history.failThis)
+    .post('/current', auth, todos.getCurrent)
+    .post('/history/add', auth, history.add)
 
 
 module.exports = router
