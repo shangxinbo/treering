@@ -20,11 +20,12 @@ exports.add = async (ctx, next) => {
         todo = query1.todo
     } else if (query2 && query2.todo.length > 0) {
         type = 2
-        todo = query1.todo
+        todo = query2.todo
     }
+    let last = todo[todo.length - 1]
 
-    if (typeof todo == 'string') {
-        if (todo == text) {
+    if (typeof last == 'string') {
+        if (last == text) {
             todo.pop()
             await History.create({
                 user_id,
@@ -33,8 +34,7 @@ exports.add = async (ctx, next) => {
                 end_time: now
             })
         }
-    } else if (typeof todo == 'object') {
-        let last = todo[todo.length - 1]
+    } else if (typeof last == 'object') {
         if (last.children[last.children.length - 1] == text) {
             if (last.children.length > 1) {
                 last.children.pop()

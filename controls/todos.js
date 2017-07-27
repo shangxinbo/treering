@@ -166,7 +166,7 @@ exports.saveChange = async (ctx, next) => {
 exports.getCurrent = async (ctx, next) => {
     let user_id = ctx.session.token
     let query = await Exigent.findOne({ user_id: user_id })
-    if (query) {
+    if (query&&query.todo.length>0) {
         let todos = query.todo
         let last = todos[todos.length - 1]
         if (typeof last == 'string') {
@@ -177,7 +177,7 @@ exports.getCurrent = async (ctx, next) => {
         }
     } else {
         let queryImportant = await Important.findOne({ user_id: user_id })
-        if (queryImportant) {
+        if (queryImportant&&queryImportant.todo.length>0) {
             let todos = queryImportant.todo
             let last = todos[todos.length - 1]
             if (typeof last == 'string') {
