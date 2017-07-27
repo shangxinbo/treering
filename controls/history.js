@@ -73,3 +73,13 @@ function getlast(obj) {
         return getlast(obj)
     }
 }
+
+exports.find = async (ctx, next) => {
+    let user_id = ctx.session.token
+    let query = await History.find({ user_id: user_id })
+    if (query) {
+        ctx.body = result(200, query)
+    } else {
+        ctx.body = result(303, 'there is no values')
+    }
+}

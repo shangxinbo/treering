@@ -27,6 +27,7 @@ router
     .post('/todos/addchild', auth, todos.createChild)
     .post('/current', auth, todos.getCurrent)
     .post('/history/add', auth, history.add)
+    .post('/history/list', auth, history.find)
 
 
 module.exports = router
