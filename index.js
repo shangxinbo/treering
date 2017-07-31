@@ -3,8 +3,9 @@ let mongoose = require('mongoose')
 let bodyParser = require('koa-bodyparser')
 let session = require('koa-session')
 let router = require('./configs/routes')
+const dbconf = require('./configs/database.js')
 
-const DB = 'mongodb://127.0.0.1:27017/treering'    //mongodb server
+const DB = `mongodb://${dbconf.name}:${dbconf.pwd}@127.0.0.1:27017/treering`    //mongodb server
 
 mongoose.Promise = require('bluebird')
 
