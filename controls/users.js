@@ -56,6 +56,18 @@ exports.login = async (ctx, next) => {
     }
 }
 
+exports.verifyPass = async (ctx, next) => {
+    let user_id = ctx.session.token
+    let password = md5(ctx.request.body.password)
+    let query = await Users.findById(user_id, 'password')
+    if (query && query.password == password) {
+        ctx.body = result(200, 'success')
+    } else {
+        ctx.body = result(302, 'password incorrect')
+    }
+}
+
+
 exports.resetPassword = async (ctx, next) => {
     let name = ctx.request.body.name
     let keyword = ctx.request.body.keyword

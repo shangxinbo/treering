@@ -20,6 +20,7 @@ router
     .post('/login', users.login)
     .post('/logout', users.logout)
     .post('/resetpass', users.resetPassword)
+    .post('/verifypass', auth, users.verifyPass)
     .post('/todos/create', auth, todos.create)
     .post('/todos/delete', auth, todos.remove)
     .post('/todos/list', auth, todos.find)
