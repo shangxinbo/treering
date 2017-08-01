@@ -4,6 +4,7 @@ let router = new Router()
 let users = require('../controls/users')
 let todos = require('../controls/todos')
 let history = require('../controls/history')
+let memo = require('../controls/memo')
 
 
 async function auth(ctx, next) {
@@ -28,6 +29,8 @@ router
     .post('/current', auth, todos.getCurrent)
     .post('/history/add', auth, history.add)
     .post('/history/list', auth, history.find)
+    .post('/memo/view', auth, memo.find)
+    .post('/memo/save', auth, memo.save)
 
 
 module.exports = router
