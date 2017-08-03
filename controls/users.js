@@ -58,6 +58,7 @@ exports.login = async (ctx, next) => {
 
 exports.verifyPass = async (ctx, next) => {
     let user_id = ctx.session.token
+    console.log(ctx.request.body.password)
     let password = md5(ctx.request.body.password)
     let query = await Users.findById(user_id, 'password')
     if (query && query.password == password) {

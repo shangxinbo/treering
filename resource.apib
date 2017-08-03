@@ -1,0 +1,244 @@
+FORMAT: 1A
+
+# Treering
+
+## Group Account
+
+## 注册 [/register]
+## 注册 [POST]
++ Parameters
+    - name (string)
+    - password (string)
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:''
+        }
+
+## 登录 [/login]
+## 登录 [POST]
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:{
+                _id: '12314345345',
+                name: 'shangxinbo',
+                join_time: '2017-06-28T09:45:40.853Z',
+                last_time: '2017-06-28T09:45:40.853Z'
+            }
+        }
+
+## 重置密码 [/resetpass]
+## 重置密码 [POST]
++ Parameters
+    - name (string)
+    - keyword (string)
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'验证通过'
+        }
+
+## 退出 [/logout]
+## 退出 [POST]
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'success'
+        }
+    
+## 验证登录密码 [/verifypass]
+## 验证登录密码 [POST]
++ Parameters
+    - password (string)
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'success'
+        }
+
+# Group Todos
+
+## 创建任务 [/todos/create]
+## 创建任务 [POST]
++ Parameters
+    - text (string)
+    - type (number) - 0: default 创建紧急任务,1:创建重要任务
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'success'
+        }
+
+## 删除任务 [/todos/delete]
+## 删除任务 [POST]
++ Parameters
+    - index (string) - '0-2' father-childern
+    - type (number) - 0: default 创建紧急任务,1:创建重要任务
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'success'
+        }
+    
+## 任务列表 [/todos/list]
+## 任务列表 [POST]
++ Parameters
+    - type (number) - 0: default 创建紧急任务,1:创建重要任务
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:[
+                {
+                    father:'asdf',
+                    childern:[
+                        'asdfa',
+                        'asdfas'
+                    ]
+                },
+                {
+                    father:'asdf',
+                    childern:[
+                        'asdfa',
+                        'asdfas'
+                    ]
+                },
+                '123123123'
+            ]
+        }
+
+## 待办任务排序 [/todos/sort]
+## 待办任务排序 [POST]
++ Parameters
+    - father (number)
+    - oldloc (number)
+    - newloc (number)
+    - type (number)
++ Response 200 (application/json)
+    
+        {
+            code: 200,
+            message:'',
+            data: 'success'
+        }
+
+## 待办事项整体保存 [/todos/saveChange]
+## 待办事项整体保存 [POST]
++ Parameters 
+    - type (number)
+    - arr (array) [
+        'asdfasf',
+        {
+            father:'asdf',
+            childern:[
+                'asdfas',
+                'asdfasd'
+            ]
+        }
+    ]
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'success'
+        }
+
+## 获取当前任务 [/current]
+## 获取当前任务 [POST]
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'123123'
+        }
+
+
+# Group History
+
+## 历史列表 [/history/list]
+## 历史列表 [POST]
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:[
+                {
+                    _id:'asdfasdfasd',
+                    user_id:'123123123',
+                    text:'asdasf',
+                    status:1,
+                    end_time:'2017-06-28T09:45:40.853Z'
+                },
+                {
+                    _id:'asdfasdfasd',
+                    user_id:'123123123',
+                    text:'asdasf',
+                    status:-1,
+                    end_time:'2017-06-28T09:45:40.853Z'
+                },
+                {
+                    _id:'asdfasdfasd',
+                    user_id:'123123123',
+                    text:'asdasf',
+                    status:1,
+                    end_time:'2017-06-28T09:45:40.853Z'
+                }
+            ]
+        }
+
+## 处理任务 [/history/add]
+## 处理任务 [POST]
++ Parameters
+    - text (string)
+    - status (number) - 1:完成,-1:放弃
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'success'
+        }
+
+
+# Group Memo
+
+## 查看备忘 [/memo/view]
+## 查看备忘 [POST]
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'@@@asdafa'
+        }
+
+## 保存备忘 [/memo/save]
+## 保存备忘 [POST]
++ Parameters
+    - content (string)
++ Response 200 (application/json)
+    
+        {
+            code:200,
+            message:'',
+            data:'success'
+        }

@@ -4,7 +4,8 @@
   "description": "a todo manager",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc": "aglio -i resource.apib -o output.html"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/shangxinbo/treering#readme",
   "dependencies": {
+    "aglio": "^2.3.0",
     "bluebird": "^3.5.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
