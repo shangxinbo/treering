@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "doc": "aglio -i resource.apib -o output.html"
+    "doc": "aglio -i README.md -o doc.html"
   },
   "repository": {
     "type": "git",

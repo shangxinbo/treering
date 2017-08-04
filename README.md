@@ -1,255 +1,37 @@
-FORMAT: 1A
-HOST: http://47.93.188.36:3000
-
 # Treering
 
-> NOTE: 每个请求的返回格式都按照如下返回
-```
-{
-    code:'',    //请求状态值
-    message:'', //错误信息
-    data:''     //正常数据 
-}
-```
-> code 值分200和非200，当code为200时说明返回的data数据是预期数据，如果是非200则查看message报告错误信息
+一个简单的时间管理器。
 
-> 其中非200的code值对应意义如下
+### 为什么要做这个
 
-|code值|意义|
-|------|-------|
-|201| 注册用户名格式不正确|
-|202| 注册密码格式不正确|
-|203| 注册用户不成功|
-|204| 用户名已被注册|
-|205| 登陆用户不存在|
-|206| 用户验证登录密码不正确|
-|301| 数据库插入错误|
-|303| 没有数据|
+从2013年末开始发现合理安排时间的重要性。先后使用过各种印象笔记，有道云笔记，为知笔记，开始觉得很是好用。后来发现这些笔记类型的应用并不切合我真正的痛点，我的痛点不是记笔记而是讲每件要做的事情安排成线性已达到关注点唯一的目的。这是我时常遇到的问题，每天就1~2件事情做的时候思路很清晰，但是当有3件以上的事情要做时头脑就会分散在不同的事情上，导致实际上的工作效率低下。我自己说我自己的话就是——越忙你就越忙，直至陷入恶性循环。
+
+后我开始接触时间管理，了解时间四象限法则，番茄工作法，GTD概念，觉得对我的时间管理提高很有用。但市面上的很多时间管理的工具都不尽人意（免费的都跟屎一样，付费的贼贵）。所以我用简化的四象限法则创建了这个应用。
+
+### 特点
+
+* 前后端分离架构，后端使用koa完成SOA化API, 实现云处理
+* 实现跨平台容易，接口唯一切对外开放，可以作为第三方调用，那表现层的实现可随意。预计这个项目会用到多端技术方案electron，cordova, react native, webapp
+* 备忘编辑支持markdown语法
+* 拖拽实现任务排序
+* 简单实用 
+
+### 简单架构
+
+![解决方案](./solution.png)
 
 
 
-## Group Account
+### 多终端实现
 
-## 注册 [POST /register]
-+ Parameters
-    - name (string)
-    - password (string)
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
+* [treering-windows](https://github.com/shangxinbo/treering-windows)
 
-## 登录 [POST /login]
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:{
-                _id: '12314345345',
-                name: 'shangxinbo',
-                join_time: '2017-06-28T09:45:40.853Z',
-                last_time: '2017-06-28T09:45:40.853Z'
-            }
-        }
+### 文档
 
-## 重置密码 [POST /resetpass]
-+ Parameters
-    - name (string)
-    - keyword (string)
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'验证通过'
-        }
+你可以直接查看，也可以查看[resource.apib](./resource.apib)
 
-## 退出 [POST /logout]
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
-    
-## 验证登录密码 [POST /verifypass]
-+ Parameters
-    - password (string)
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
+### 技术栈
 
-# Group Todos
-
-## 创建任务 [POST /todos/create]
-+ Parameters
-    - text (string)
-    - type (number)  - 0: default 创建紧急任务,1:创建重要任务
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
-
-## 删除任务 [POST /todos/delete]
-+ Parameters
-    - index (string) - '0-2' father-childern
-    - type (number) - 0: default 创建紧急任务,1:创建重要任务
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
-    
-## 任务列表 [POST /todos/list]
-+ Parameters
-    - type (number) - 0: default 创建紧急任务,1:创建重要任务
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:[
-                {
-                    father:'asdf',
-                    childern:[
-                        'asdfa',
-                        'asdfas'
-                    ]
-                },
-                {
-                    father:'asdf',
-                    childern:[
-                        'asdfa',
-                        'asdfas'
-                    ]
-                },
-                '123123123'
-            ]
-        }
-
-## 待办任务排序 [POST /todos/sort]
-+ Parameters
-    - father (number)
-    - oldloc (number)
-    - newloc (number)
-    - type (number)
-+ Response 200 (application/json)
-    
-        {
-            code: 200,
-            message:'',
-            data: 'success'
-        }
-
-## 待办事项整体保存 [POST /todos/saveChange]
-+ Parameters 
-    - type (number)
-    - arr (array) [
-        'asdfasf',
-        {
-            father:'asdf',
-            childern:[
-                'asdfas',
-                'asdfasd'
-            ]
-        }
-    ]
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
-
-## 获取当前任务 [POST /current]
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'123123'
-        }
-
-
-# Group History
-
-## 历史列表 [POST /history/list]
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:[
-                {
-                    _id:'asdfasdfasd',
-                    user_id:'123123123',
-                    text:'asdasf',
-                    status:1,
-                    end_time:'2017-06-28T09:45:40.853Z'
-                },
-                {
-                    _id:'asdfasdfasd',
-                    user_id:'123123123',
-                    text:'asdasf',
-                    status:-1,
-                    end_time:'2017-06-28T09:45:40.853Z'
-                },
-                {
-                    _id:'asdfasdfasd',
-                    user_id:'123123123',
-                    text:'asdasf',
-                    status:1,
-                    end_time:'2017-06-28T09:45:40.853Z'
-                }
-            ]
-        }
-
-## 处理任务 [POST /history/add]
-+ Parameters
-    - text (string)
-    - status (number) - 1:完成,-1:放弃
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
-
-
-# Group Memo
-
-## 查看备忘 [POST /memo/view]
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'@@@asdafa'
-        }
-
-## 保存备忘 [POST /memo/save]
-+ Parameters
-    - content (string)
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
+* api blueprint  with aglio
+* koa
+* mongoose + mongodb
