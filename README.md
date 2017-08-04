@@ -32,7 +32,7 @@
 
 ### 文档
 
-你可以直接查看，也可以查看[resource.apib](./resource.apib)
+你可以直接查看http://47.93.188.36:3000/doc.html，也可以查看[resource.apib](./resource.apib)
 
 ### 技术栈
 
