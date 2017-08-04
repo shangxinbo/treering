@@ -58,7 +58,7 @@ exports.add = async (ctx, next) => {
         }
         ctx.body = result(200, 'success')
     } else {
-        ctx.body = result(302, 'no data')
+        ctx.body = result(303, 'there is no values')
     }
 
 }

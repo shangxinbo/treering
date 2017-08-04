@@ -1,11 +1,35 @@
 FORMAT: 1A
+HOST: http://47.93.188.36:3000
 
 # Treering
 
+> NOTE: 每个请求的返回格式都按照如下返回
+```
+{
+    code:'',    //请求状态值
+    message:'', //错误信息
+    data:''     //正常数据 
+}
+```
+> code 值分200和非200，当code为200时说明返回的data数据是预期数据，如果是非200则查看message报告错误信息
+
+其中非200的code值对应意义如下
+|code值|意义|
+|------|-------|
+|201| 注册用户名格式不正确|
+|202| 注册密码格式不正确|
+|203| 注册用户不成功|
+|204| 用户名已被注册|
+|205| 登陆用户不存在|
+|206| 用户验证登录密码不正确|
+|301| 数据库插入错误|
+|303| 没有数据|
+
+
+
 ## Group Account
 
-## 注册 [/register]
-## 注册 [POST]
+## 注册 [POST /register]
 + Parameters
     - name (string)
     - password (string)
@@ -14,11 +38,10 @@ FORMAT: 1A
         {
             code:200,
             message:'',
-            data:''
+            data:'success'
         }
 
-## 登录 [/login]
-## 登录 [POST]
+## 登录 [POST /login]
 + Response 200 (application/json)
     
         {
@@ -32,8 +55,7 @@ FORMAT: 1A
             }
         }
 
-## 重置密码 [/resetpass]
-## 重置密码 [POST]
+## 重置密码 [POST /resetpass]
 + Parameters
     - name (string)
     - keyword (string)
@@ -45,8 +67,7 @@ FORMAT: 1A
             data:'验证通过'
         }
 
-## 退出 [/logout]
-## 退出 [POST]
+## 退出 [POST /logout]
 + Response 200 (application/json)
     
         {
@@ -55,8 +76,7 @@ FORMAT: 1A
             data:'success'
         }
     
-## 验证登录密码 [/verifypass]
-## 验证登录密码 [POST]
+## 验证登录密码 [POST /verifypass]
 + Parameters
     - password (string)
 + Response 200 (application/json)
@@ -69,11 +89,10 @@ FORMAT: 1A
 
 # Group Todos
 
-## 创建任务 [/todos/create]
-## 创建任务 [POST]
+## 创建任务 [POST /todos/create]
 + Parameters
     - text (string)
-    - type (number) - 0: default 创建紧急任务,1:创建重要任务
+    - type (number)  - 0: default 创建紧急任务,1:创建重要任务
 + Response 200 (application/json)
     
         {
@@ -82,8 +101,7 @@ FORMAT: 1A
             data:'success'
         }
 
-## 删除任务 [/todos/delete]
-## 删除任务 [POST]
+## 删除任务 [POST /todos/delete]
 + Parameters
     - index (string) - '0-2' father-childern
     - type (number) - 0: default 创建紧急任务,1:创建重要任务
@@ -95,8 +113,7 @@ FORMAT: 1A
             data:'success'
         }
     
-## 任务列表 [/todos/list]
-## 任务列表 [POST]
+## 任务列表 [POST /todos/list]
 + Parameters
     - type (number) - 0: default 创建紧急任务,1:创建重要任务
 + Response 200 (application/json)
@@ -123,8 +140,7 @@ FORMAT: 1A
             ]
         }
 
-## 待办任务排序 [/todos/sort]
-## 待办任务排序 [POST]
+## 待办任务排序 [POST /todos/sort]
 + Parameters
     - father (number)
     - oldloc (number)
@@ -138,8 +154,7 @@ FORMAT: 1A
             data: 'success'
         }
 
-## 待办事项整体保存 [/todos/saveChange]
-## 待办事项整体保存 [POST]
+## 待办事项整体保存 [POST /todos/saveChange]
 + Parameters 
     - type (number)
     - arr (array) [
@@ -160,8 +175,7 @@ FORMAT: 1A
             data:'success'
         }
 
-## 获取当前任务 [/current]
-## 获取当前任务 [POST]
+## 获取当前任务 [POST /current]
 + Response 200 (application/json)
     
         {
@@ -173,8 +187,7 @@ FORMAT: 1A
 
 # Group History
 
-## 历史列表 [/history/list]
-## 历史列表 [POST]
+## 历史列表 [POST /history/list]
 + Response 200 (application/json)
     
         {
@@ -205,8 +218,7 @@ FORMAT: 1A
             ]
         }
 
-## 处理任务 [/history/add]
-## 处理任务 [POST]
+## 处理任务 [POST /history/add]
 + Parameters
     - text (string)
     - status (number) - 1:完成,-1:放弃
@@ -221,8 +233,7 @@ FORMAT: 1A
 
 # Group Memo
 
-## 查看备忘 [/memo/view]
-## 查看备忘 [POST]
+## 查看备忘 [POST /memo/view]
 + Response 200 (application/json)
     
         {
@@ -231,8 +242,7 @@ FORMAT: 1A
             data:'@@@asdafa'
         }
 
-## 保存备忘 [/memo/save]
-## 保存备忘 [POST]
+## 保存备忘 [POST /memo/save]
 + Parameters
     - content (string)
 + Response 200 (application/json)

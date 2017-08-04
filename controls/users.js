@@ -58,16 +58,14 @@ exports.login = async (ctx, next) => {
 
 exports.verifyPass = async (ctx, next) => {
     let user_id = ctx.session.token
-    console.log(ctx.request.body.password)
     let password = md5(ctx.request.body.password)
     let query = await Users.findById(user_id, 'password')
     if (query && query.password == password) {
         ctx.body = result(200, 'success')
     } else {
-        ctx.body = result(302, 'password incorrect')
+        ctx.body = result(206, 'password incorrect')
     }
 }
-
 
 exports.resetPassword = async (ctx, next) => {
     let name = ctx.request.body.name
@@ -116,20 +114,20 @@ exports.resetPassword = async (ctx, next) => {
             if (index >= 0) {
                 ctx.body = result(200, '验证通过')
             } else {
-                ctx.body = result(401, 'name or kewwords error')
+                ctx.body = result(207, 'name or kewwords error')
             }
         } else {
             ctx.body = result(402, 'there is no history of use')
         }
 
     } else {
-        ctx.body = result(401, 'name or kewwords error')
+        ctx.body = result(207, 'name or kewwords error')
     }
 }
 
 exports.logout = async (ctx, next) => {
     ctx.session = null
-    ctx.body = result(200, 'logout success')
+    ctx.body = result(200, 'success')
 }
 
 function gettext(obj) {
@@ -142,6 +140,5 @@ function gettext(obj) {
             arr = arr.concat(gettext(item))
         }
     })
-    //console.log(arr)
     return arr
 }

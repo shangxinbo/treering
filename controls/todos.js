@@ -25,7 +25,7 @@ exports.create = async (ctx, next) => {
                 last_time: now
             })
         }
-        ctx.body = result(200, 'create success')
+        ctx.body = result(200, 'success')
     } catch (err) {
         ctx.body = result(301, err)
     }
@@ -158,7 +158,7 @@ exports.saveChange = async (ctx, next) => {
     let user_id = ctx.session.token
     let model = type == 1 ? Important : Exigent
     await model.findOneAndUpdate({ user_id: user_id, todo: arr })
-    ctx.body = result(200, 'sort success')
+    ctx.body = result(200, 'success')
 }
 
 
@@ -166,7 +166,7 @@ exports.saveChange = async (ctx, next) => {
 exports.getCurrent = async (ctx, next) => {
     let user_id = ctx.session.token
     let query = await Exigent.findOne({ user_id: user_id })
-    if (query&&query.todo.length>0) {
+    if (query && query.todo.length > 0) {
         let todos = query.todo
         let last = todos[todos.length - 1]
         if (typeof last == 'string') {
@@ -177,7 +177,7 @@ exports.getCurrent = async (ctx, next) => {
         }
     } else {
         let queryImportant = await Important.findOne({ user_id: user_id })
-        if (queryImportant&&queryImportant.todo.length>0) {
+        if (queryImportant && queryImportant.todo.length > 0) {
             let todos = queryImportant.todo
             let last = todos[todos.length - 1]
             if (typeof last == 'string') {
