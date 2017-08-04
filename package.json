@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "doc": "aglio -i README.md -o doc.html"
+    "doc": "aglio -i README.md -o statics/doc.html"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
     "koa-session": "^5.3.0",
+    "koa-static": "^4.0.1",
     "md5": "^2.2.1",
     "mongoose": "^4.11.0"
   },

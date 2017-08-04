@@ -2,6 +2,7 @@ let Koa = require('koa')
 let mongoose = require('mongoose')
 let bodyParser = require('koa-bodyparser')
 let session = require('koa-session')
+const serve = require('koa-static')
 let router = require('./configs/routes')
 const dbconf = require('./configs/database.js')
 
@@ -25,6 +26,7 @@ const CONFIG = {
 
 app.use(bodyParser())
 app.use(session(CONFIG, app))
+app.use(serve('./statics'))
 
 app
     
