@@ -4,9 +4,16 @@ let bodyParser = require('koa-bodyparser')
 let session = require('koa-session')
 const serve = require('koa-static')
 let router = require('./configs/routes')
-const dbconf = require('./configs/database.js')
 
-const DB = `mongodb://${dbconf.name}:${dbconf.pwd}@127.0.0.1:27017/treering`    //mongodb server
+let dbconf,DB
+if (process.env.NODE_ENV != 'test') {
+    dbconf = require('./configs/database.js')
+}
+if (dbconf) {
+    DB = `mongodb://${dbconf.name}:${dbconf.pwd}@127.0.0.1:27017/treering`    //mongodb server
+}else{
+    DB = `mongodb://@127.0.0.1:27017/treering`    //mongodb server
+}
 
 mongoose.Promise = require('bluebird')
 
@@ -29,7 +36,7 @@ app.use(session(CONFIG, app))
 app.use(serve('./statics'))
 
 app
-    
+
     .use(router.routes())
     .use(router.allowedMethods())
 
@@ -57,3 +64,5 @@ process.on('SIGINT', function () {
         process.exit(0)
     })
 })
+
+exports.app = app

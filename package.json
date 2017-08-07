@@ -4,7 +4,7 @@
   "description": "a todo manager",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "doc": "aglio -i resource.apib -o statics/doc.html"
   },
   "repository": {
@@ -24,13 +24,17 @@
   "dependencies": {
     "aglio": "^2.3.0",
     "bluebird": "^3.5.0",
+    "codecov.io": "^0.1.6",
+    "istanbul": "^0.4.5",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
     "koa-session": "^5.3.0",
     "koa-static": "^4.0.1",
     "md5": "^2.2.1",
-    "mongoose": "^4.11.0"
+    "mocha": "^3.5.0",
+    "mongoose": "^4.11.0",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
