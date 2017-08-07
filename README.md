@@ -1,6 +1,7 @@
 # Treering
 [![Travis](https://img.shields.io/travis/shangxinbo/cardinal.svg?style=flat-square)](https://travis-ci.org/shangxinbo/treering)
 [![Codecov branch](https://img.shields.io/codecov/c/github/shangxinbo/cardinal/master.svg?style=flat-square)](https://codecov.io/gh/shangxinbo/treering/branch/master)
+[![npm (tag)](https://img.shields.io/npm/v/npm/next.svg?style=plastic)](5.4.0)
 
 一个简单的时间管理器。
 
