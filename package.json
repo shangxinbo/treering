@@ -4,7 +4,7 @@
   "description": "a todo manager",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "doc": "aglio -i resource.apib -o statics/doc.html"
   },
   "repository": {
