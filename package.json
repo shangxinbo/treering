@@ -24,6 +24,8 @@
   "dependencies": {
     "aglio": "^2.3.0",
     "bluebird": "^3.5.0",
+    "codecov": "^2.3.0",
+    "istanbul": "^0.4.5",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
