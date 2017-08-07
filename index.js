@@ -6,7 +6,7 @@ const serve = require('koa-static')
 let router = require('./configs/routes')
 
 let dbconf
-if (process.env.NODE_ENV == 'test') {
+if (process.env.NODE_ENV != 'test') {
     dbconf = require('./configs/database.js')
 }
 if (dbconf.name) {
