@@ -5,14 +5,14 @@ let session = require('koa-session')
 const serve = require('koa-static')
 let router = require('./configs/routes')
 
-let dbconf
+let dbconf,DB
 if (process.env.NODE_ENV != 'test') {
     dbconf = require('./configs/database.js')
 }
 if (dbconf) {
-    const DB = `mongodb://${dbconf.name}:${dbconf.pwd}@127.0.0.1:27017/treering`    //mongodb server
+    DB = `mongodb://${dbconf.name}:${dbconf.pwd}@127.0.0.1:27017/treering`    //mongodb server
 }else{
-    const DB = `mongodb://@127.0.0.1:27017/treering`    //mongodb server
+    DB = `mongodb://@127.0.0.1:27017/treering`    //mongodb server
 }
 
 
