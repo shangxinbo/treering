@@ -8,3 +8,9 @@ services:
   - mongodb
 before_install:
   - export NODE_ENV=test
+env:  
+  global:
+    - CODECOV_TOKEN: f87a6d44-a23e-4c0f-a0c1-157c808dee74
+script:  
+  - istanbul cover node_modules/mocha/bin/_mocha
+  - cat ./coverage/coverage.json | node_modules/codecov.io/bin/codecov.io.js

@@ -1,5 +1,4 @@
 const request = require('supertest')
-const Users = require('../controls/users.js')
 const { app } = require('../index')
 
 describe('Account', () => {
@@ -69,5 +68,6 @@ describe('Account', () => {
                 })
         })
     })
+    
 
 })

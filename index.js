@@ -15,7 +15,6 @@ if (dbconf) {
     DB = `mongodb://@127.0.0.1:27017/treering`    //mongodb server
 }
 
-
 mongoose.Promise = require('bluebird')
 
 let app = new Koa()
