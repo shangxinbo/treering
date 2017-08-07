@@ -109,6 +109,16 @@ exports.remove = async (ctx, next) => {
     }
 }
 
+function reserveArr(arr) {
+    let a = arr.reverse()
+    a.forEach((item, key) => {
+        if (item instanceof Object) {
+            a[key].children = item.children.reverse()
+        }
+    })
+    return a
+}
+
 //query all todo list by this user
 exports.find = async (ctx, next) => {
     let user_id = ctx.session.token
@@ -116,7 +126,7 @@ exports.find = async (ctx, next) => {
     let model = type == 1 ? Important : Exigent
     let query = await model.findOne({ user_id: user_id })
     if (query) {
-        ctx.body = result(200, query.todo)
+        ctx.body = result(200, reserveArr(query.todo))
     } else {
         ctx.body = result(303, 'there is no values')
     }
@@ -155,6 +165,7 @@ exports.sort = async (ctx, next) => {
 exports.saveChange = async (ctx, next) => {
     let type = ctx.request.body.type
     let arr = ctx.request.body.arr
+    arr = reserveArr(arr)
     let user_id = ctx.session.token
     let model = type == 1 ? Important : Exigent
     await model.findOneAndUpdate({ user_id: user_id, todo: arr })
