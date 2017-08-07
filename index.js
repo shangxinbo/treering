@@ -4,7 +4,7 @@ let bodyParser = require('koa-bodyparser')
 let session = require('koa-session')
 const serve = require('koa-static')
 let router = require('./configs/routes')
-console.log(123)
+console.log(process.env.NODE_ENV)
 const dbconf = require('./configs/database.js')
 console.log(123)
 const DB = `mongodb://${dbconf.name}:${dbconf.pwd}@127.0.0.1:27017/treering`    //mongodb server
