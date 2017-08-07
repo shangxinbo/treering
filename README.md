@@ -1,7 +1,8 @@
 # Treering
 [![Travis](https://img.shields.io/travis/shangxinbo/cardinal.svg?style=flat-square)](https://travis-ci.org/shangxinbo/treering)
 [![Codecov branch](https://img.shields.io/codecov/c/github/shangxinbo/cardinal/master.svg?style=flat-square)](https://codecov.io/gh/shangxinbo/treering/branch/master)
-[![npm (tag)](https://img.shields.io/npm/v/npm/next.svg?style=plastic)](5.4.0)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/shangxinbo/treering/master/LICENSE)
+[![Dependency Status](https://www.versioneye.com/user/projects/5987f4516725bd0058879735/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5987f4516725bd0058879735)
 
 一个简单的时间管理器。
 
