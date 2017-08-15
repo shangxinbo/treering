@@ -26,7 +26,7 @@ exports.save = async (ctx, next) => {
 function cipher(key, buf) {
     let encrypted = ""
     let cip = crypto.createCipher('aes-256-cbc', key)
-    encrypted += cip.update(buf, 'binary', 'hex')
+    encrypted += cip.update(buf, 'utf8', 'hex')
     encrypted += cip.final('hex')
     return encrypted
 }
@@ -34,7 +34,7 @@ function cipher(key, buf) {
 function decipher(key, encrypted) {
     let decrypted = ""
     let decipher = crypto.createDecipher('aes-256-cbc', key)
-    decrypted += decipher.update(encrypted, 'hex', 'binary')
-    decrypted += decipher.final('binary')
+    decrypted += decipher.update(encrypted, 'hex', 'utf8')
+    decrypted += decipher.final('utf8')
     return decrypted
 }
