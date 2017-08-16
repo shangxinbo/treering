@@ -57,7 +57,7 @@ exports.getCurrent = async (ctx, next) => {
     let arr = []
 
     if (query1 && query2) {
-        arr = query1.todo.concat(query2.todo)
+        arr = query2.todo.concat(query1.todo)
     } else {
         if (query1 || query2) {
             arr = query1 ? query1.todo : query2.todo
