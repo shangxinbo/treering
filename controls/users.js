@@ -1,6 +1,5 @@
 let Users = require('../models/Users')
-let Exigent = require('../models/Exigent')
-let Important = require('../models/Important')
+let Todo = require('../models/Todo')
 let History = require('../models/History')
 let md5 = require('md5')
 let result = require('../utils/classes').result
@@ -72,40 +71,17 @@ exports.resetPassword = async (ctx, next) => {
     let keyword = ctx.request.body.keyword
     let user = await Users.findOne({ name: name })
     if (user && keyword.length > 3) {
-        let id = user.id
-        let queryTodo = await Exigent.findOne({ user_id: id })
-        let queryImportant = await Important.findOne({ user_id: id })
-        let queryHistory = await History.find({ user_id: id })
+        let queryTodo = await Todo.find({ user_id: user.id })
+        let queryHistory = await History.find({ user_id: user.id })
         let alltext = []
-        if (queryTodo) {
-            queryTodo.todo.forEach((item, index, arr) => {
-                if (typeof item == 'string') {
-                    alltext.push(item)
-                } else {
-                    let ss = gettext(item)
-                    alltext = alltext.concat(ss)
+        
+        queryTodo.forEach((item, index, arr) => {
+            alltext = [...item.todo]
+        })
 
-                }
-            })
-        }
-
-        if (queryImportant) {
-            queryImportant.todo.forEach((item, index, arr) => {
-                if (typeof item == 'string') {
-                    alltext.push(item)
-                } else {
-                    let ss = gettext(item)
-                    alltext = alltext.concat(ss)
-
-                }
-            })
-        }
-
-        if (queryHistory.length > 0) {
-            queryHistory.forEach((item, index) => {
-                alltext.push(item.text)
-            })
-        }
+        queryHistory.forEach((item, index) => {
+            alltext.push(item.text)
+        })
 
         if (alltext.length > 0) {
             let index = alltext.findIndex(el => {

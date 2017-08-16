@@ -90,31 +90,7 @@ HOST: http://47.93.188.36:3000
 
 # Group Todos
 
-## 创建任务 [POST /todos/create]
-+ Parameters
-    - text (string)
-    - type (number)  - 0: default 创建紧急任务,1:创建重要任务
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
-
-## 删除任务 [POST /todos/delete]
-+ Parameters
-    - index (string) - '0-2' father-childern
-    - type (number) - 0: default 创建紧急任务,1:创建重要任务
-+ Response 200 (application/json)
-    
-        {
-            code:200,
-            message:'',
-            data:'success'
-        }
-    
-## 任务列表 [POST /todos/list]
+## 任务列表 [POST /todos/find]
 + Parameters
     - type (number) - 0: default 创建紧急任务,1:创建重要任务
 + Response 200 (application/json)
@@ -139,20 +115,6 @@ HOST: http://47.93.188.36:3000
                 },
                 '123123123'
             ]
-        }
-
-## 待办任务排序 [POST /todos/sort]
-+ Parameters
-    - father (number)
-    - oldloc (number)
-    - newloc (number)
-    - type (number)
-+ Response 200 (application/json)
-    
-        {
-            code: 200,
-            message:'',
-            data: 'success'
         }
 
 ## 待办事项整体保存 [POST /todos/saveChange]
