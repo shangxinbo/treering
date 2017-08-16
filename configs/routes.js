@@ -21,6 +21,7 @@ router
     .post('/logout', users.logout)
     .post('/resetpass', users.resetPassword)
     .post('/verifypass', auth, users.verifyPass)
+    .post('/todos/create', auth, todos.create)
     .post('/todos/find', auth, todos.find)
     .post('/todos/save', auth, todos.save)
     .post('/current', auth, todos.getCurrent)

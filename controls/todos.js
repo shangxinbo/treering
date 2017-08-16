@@ -15,6 +15,25 @@ exports.find = async (ctx, next) => {
     }
 }
 
+exports.create = async (ctx, next) => {
+    let user_id = ctx.session.token
+    let type = ctx.request.body.type
+    let text = ctx.request.body.text
+    let query = await Todo.findOne({ user_id: user_id, type: type })
+    if (query) {
+        let todo = query.todo.reverse()
+        todo.unshift(text)
+        await Todo.findOneAndUpdate({ user_id: user_id, type: type }, { todo: todo.reverse() })
+    } else {
+        await Todo.create({
+            user_id,
+            todo: [text],
+            type: type
+        })
+    }
+    ctx.body = result(200, 'success')
+}
+
 exports.save = async (ctx, next) => {
 
     let type = ctx.request.body.type
@@ -46,7 +65,7 @@ exports.getCurrent = async (ctx, next) => {
     }
 
     if (arr.length > 0) {
-        ctx.body = result(200, arr[arr.length-1])
+        ctx.body = result(200, arr[arr.length - 1])
     } else {
         ctx.body = result(303, 'there is no values')
     }
