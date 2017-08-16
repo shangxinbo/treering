@@ -29,10 +29,10 @@ exports.add = async (ctx, next) => {
 
     if (query1 && query1.todo.length > 0) {
         await handle(query1.todo[query1.todo.length - 1], query1.todo, 0)
-    }
-
-    if (query2 && query2.todo.length > 0) {
+    }else if (query2 && query2.todo.length > 0) {
         await handle(query1.todo[query1.todo.length - 1], query2.todo, 1)
+    } else {
+        ctx.body = result(303, 'there is no values')
     }
 
 }
