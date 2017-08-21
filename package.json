@@ -4,6 +4,7 @@
   "description": "a todo manager",
   "main": "index.js",
   "scripts": {
+    "start":"node index.js",
     "test": "mocha",
     "doc": "aglio -i resource.apib -o statics/doc.html"
   },
