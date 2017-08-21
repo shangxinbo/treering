@@ -12,8 +12,8 @@ if (process.env.NODE_ENV != 'test') {
 if (dbconf) {
     DB = `mongodb://${dbconf.name}:${dbconf.pwd}@127.0.0.1:27017/treering`    //mongodb server
 }else{
-    //DB = `mongodb://@127.0.0.1:27017/treering`    //mongodb server
-    DB = `mongodb://heroku_k99jhcbh:i6s46ppu5303e2l7p24vome6t7@ds023463.mlab.com:23463/heroku_k99jhcbh`
+    DB = `mongodb://@127.0.0.1:27017/treering`    //mongodb server
+    //DB = `mongodb://heroku_k99jhcbh:i6s46ppu5303e2l7p24vome6t7@ds023463.mlab.com:23463/heroku_k99jhcbh`
 }
 
 mongoose.Promise = require('bluebird')
